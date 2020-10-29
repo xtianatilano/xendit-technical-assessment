@@ -1,0 +1,160 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Xendit",
+        "description": "Xendit technical assessment"
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/orgs": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get all organizations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Organizations"
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{orgname}/comments": {
+            "parameters": [
+                {
+                    "name": "orgname",
+                    "in": "path",
+                    "required": true,
+                    "description": "Organization name",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Organization Comments"
+                ],
+                "summary": "Get all comments for an organization.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/OrganizationComments"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add a comment for an organization.",
+                "tags": [
+                    "Organization Comments"
+                ],
+                "requestBody": {
+                    "description": "Organization Comment Request Data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/OrganizationComments"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/OrganizationComments"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Soft delete all comments of an organization",
+                "tags": [
+                    "Organization Comments"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/orgs/{orgname}/members": {
+            "parameters": [
+                {
+                    "name": "orgname",
+                    "in": "path",
+                    "required": true,
+                    "description": "Organization name",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Organization Members"
+                ],
+                "summary": "Get all members of an organization.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/OrganizationMembers"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Organizations": {
+            "type": "object",
+            "properties": {
+                "id": "number",
+                "name": "string",
+                "createdAt": "string"
+            }
+        },
+        "OrganizationComments": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                }
+            }
+        },
+        "OrganizationMembers": {
+            "type": "object",
+            "properties": {
+                "id": "number",
+                "username": "string",
+                "password": "string",
+                "avatarUrl": "string",
+                "followerCount": "string",
+                "followingCount": "string"
+            }
+        }
+    }
+}
